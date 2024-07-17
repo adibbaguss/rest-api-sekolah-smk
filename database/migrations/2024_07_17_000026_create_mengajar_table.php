@@ -20,7 +20,9 @@ return new class extends Migration
             $table->integer('semester');
             $table->timestamps();
 
-            // relasi
+            /**
+             * relasi
+             */
             $table->foreign('id_guru')->references('id')->on('guru');
             $table->foreign('id_mapel')->references('id')->on('mata_pelajaran');
             $table->foreign('id_kelas')->references('id')->on('kelas');

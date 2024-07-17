@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('kelas', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nama_kelas');
-
             $table->string('tahun_ajaran'); //contoh 2023/2024
             $table->timestamps();
         });
