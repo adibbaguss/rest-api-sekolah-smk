@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Faker\Factory as Faker;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -12,21 +13,28 @@ class SiswaSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('siswa')->insert([
-            'nisn' => '1234567890',
-            'nama_lengkap' => 'Adib Bagus Sudiyono',
-            'jenis_kelamin' => 'L',
-            'tanggal_lahir' => '2000-01-01',
-            'tempat_lahir' => 'Batang',
-            'alamat' => 'Jl. Kebon Jeruk No. 123',
-            'nomor_telepon' => '081234567890',
-            'email' => 'adib@example.com',
-            'id_jurusan' => 1,
-            'status_aktif' => 'aktif',
-            'tahun_masuk' => 2019,
-            'tahun_lulus' => null,
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+        $faker = Faker::create();
+
+        // Assuming you already have up to 4 jurusan records in the 'jurusan' table
+        $jurusanIds = DB::table('jurusan')->pluck('id')->take(4)->toArray();
+
+        for ($i = 0; $i < 20; $i++) {
+            DB::table('siswa')->insert([
+                'nisn' => $faker->unique()->numerify('##########'),
+                'nama_lengkap' => $faker->name,
+                'jenis_kelamin' => $faker->randomElement(['L', 'P']),
+                'tanggal_lahir' => $faker->date('Y-m-d', '2005-12-31'),
+                'tempat_lahir' => $faker->city,
+                'alamat' => $faker->address,
+                'nomor_telepon' => $faker->phoneNumber,
+                'email' => $faker->unique()->safeEmail,
+                'id_jurusan' => $faker->randomElement($jurusanIds),
+                'status_aktif' => $faker->randomElement(['aktif', 'lulus']),
+                'tahun_masuk' => $faker->numberBetween(2018, 2021),
+                'tahun_lulus' => $faker->optional()->numberBetween(2022, 2024),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
     }
 }
