@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\GuruController;
 use App\Http\Controllers\Api\JurusanController;
+use App\Http\Controllers\Api\MataPelajaranController;
 use App\Http\Controllers\Api\SiswaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -18,3 +19,6 @@ Route::apiResource('/jurusan', JurusanController::class);
 
 // guru
 Route::apiResource('/guru', GuruController::class);
+
+// mata pelajaran
+Route::apiResource('/mata_pelajaran', MataPelajaranController::class);
