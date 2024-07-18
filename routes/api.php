@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\GuruController;
 use App\Http\Controllers\Api\JurusanController;
 use App\Http\Controllers\Api\SiswaController;
 use Illuminate\Http\Request;
@@ -14,3 +15,6 @@ Route::apiResource('/siswa', SiswaController::class);
 
 // jurusan
 Route::apiResource('/jurusan', JurusanController::class);
+
+// guru
+Route::apiResource('/guru', GuruController::class);
