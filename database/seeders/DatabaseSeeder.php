@@ -7,6 +7,7 @@ use Database\Seeders\GuruSeeder;
 use Database\Seeders\JurusanSeeder;
 use Database\Seeders\KelasSeeder;
 use Database\Seeders\MataPelajaranSeeder;
+use Database\Seeders\MengajarSeeder;
 use Database\Seeders\SiswaSeeder;
 use Illuminate\Database\Seeder;
 
@@ -30,6 +31,7 @@ class DatabaseSeeder extends Seeder
             GuruSeeder::class,
             MataPelajaranSeeder::class,
             KelasSeeder::class,
+            MengajarSeeder::class,
         ]);
     }
 }

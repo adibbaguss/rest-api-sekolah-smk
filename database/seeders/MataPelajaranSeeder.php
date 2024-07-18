@@ -15,7 +15,7 @@ class MataPelajaranSeeder extends Seeder
     {
         $faker = Factory::create();
 
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 30; $i++) {
             DB::table('mata_pelajaran')->insert([
                 'kode_mapel' => $faker->unique()->numerify('####'),
                 'nama_mapel' => $faker->word,
