@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Faker\Factory as Faker;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -13,12 +12,17 @@ class JurusanSeeder extends Seeder
      */
     public function run(): void
     {
-        $faker = Faker::create();
+        $jurusan = [
+            ['kode_jurusan' => '001', 'nama_jurusan' => 'Teknik Komputer dan Jaringan'],
+            ['kode_jurusan' => '002', 'nama_jurusan' => 'Multimedia'],
+            ['kode_jurusan' => '003', 'nama_jurusan' => 'Rekayasa Perangkat Lunak'],
+            ['kode_jurusan' => '004', 'nama_jurusan' => 'Akuntansi'],
+        ];
 
-        for ($i = 0; $i < 6; $i++) {
+        foreach ($jurusan as $j) {
             DB::table('jurusan')->insert([
-                'kode_jurusan' => $faker->unique()->numerify('####'),
-                'nama_jurusan' => $faker->word,
+                'kode_jurusan' => $j['kode_jurusan'],
+                'nama_jurusan' => $j['nama_jurusan'],
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

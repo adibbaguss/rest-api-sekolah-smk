@@ -14,12 +14,12 @@ class GuruSeeder extends Seeder
     public function run(): void
     {
         $faker = Faker::create();
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 20; $i++) {
             DB::table('guru')->insert([
                 'nip' => $faker->unique()->numerify('###############'),
                 'nama_lengkap' => $faker->name,
                 'jenis_kelamin' => $faker->randomElement(['L', 'P']),
-                'tanggal_lahir' => $faker->date,
+                'tanggal_lahir' => $faker->dateTimeBetween('1980-01-01', '2000-12-31')->format('Y-m-d'),
                 'alamat' => $faker->address,
                 'nomor_telepon' => $faker->phoneNumber,
                 'email' => $faker->unique()->safeEmail,

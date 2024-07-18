@@ -15,21 +15,20 @@ class SiswaSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        // Assuming you already have up to 4 jurusan records in the 'jurusan' table
-        $jurusanIds = DB::table('jurusan')->pluck('id')->take(4)->toArray();
+        $jurusanIds = DB::table('jurusan')->pluck('id')->take(24)->toArray();
 
-        for ($i = 0; $i < 20; $i++) {
+        for ($i = 0; $i < 330; $i++) {
             DB::table('siswa')->insert([
                 'nisn' => $faker->unique()->numerify('##########'),
                 'nama_lengkap' => $faker->name,
                 'jenis_kelamin' => $faker->randomElement(['L', 'P']),
-                'tanggal_lahir' => $faker->date('Y-m-d', '2005-12-31'),
+                'tanggal_lahir' => $faker->dateTimeBetween('2005-01-01', '2008-12-31')->format('Y-m-d'),
                 'tempat_lahir' => $faker->city,
                 'alamat' => $faker->address,
                 'nomor_telepon' => $faker->phoneNumber,
                 'email' => $faker->unique()->safeEmail,
                 'id_jurusan' => $faker->randomElement($jurusanIds),
-                'status_aktif' => $faker->randomElement(['aktif', 'lulus']),
+                'status_aktif' => 'aktif',
                 'tahun_masuk' => $faker->numberBetween(2018, 2021),
                 'tahun_lulus' => $faker->optional()->numberBetween(2022, 2024),
                 'created_at' => now(),
