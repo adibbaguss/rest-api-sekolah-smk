@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\GuruController;
+use App\Http\Controllers\Api\JadwalPelajaranController;
 use App\Http\Controllers\Api\JurusanController;
 use App\Http\Controllers\Api\KelasController;
 use App\Http\Controllers\Api\MataPelajaranController;
@@ -34,3 +35,6 @@ Route::apiResource('/mengajar', MengajarController::class);
 
 // nilai
 Route::apiResource('/nilai', NilaiController::class);
+
+// jadwal pelajaran
+Route::apiResource('/jadwal_pelajaran', JadwalPelajaranController::class);
