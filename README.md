@@ -1,4 +1,4 @@
-```markdown
+
 # API Sekolah SMK
 
 API ini menyediakan berbagai endpoint untuk mengelola data sekolah SMK, termasuk data siswa, guru, jurusan, mata pelajaran, jadwal pelajaran, mengajar, nilai, dan kelas. Selain operasi CRUD (Create, Read, Update, Delete) dasar, API ini juga menawarkan endpoint khusus untuk kebutuhan spesifik.
@@ -184,9 +184,10 @@ Jika Anda ingin berkontribusi, silakan buat pull request dengan deskripsi peruba
 
 ilakan dan akan diperiksa secepat mungkin.
 
-## Lisensi
 
-Proyek ini dilisensikan di bawah lisensi MIT - lihat file [LICENSE](LICENSE) untuk detailnya.
-```
+## Media Sosial
 
-Pastikan untuk menyesuaikan URL kloning repositori dan menambahkan informasi lain yang mungkin relevan untuk proyek Anda.
+- **Instagram:** [adibbagus_](https://www.instagram.com/adibbagus_)
+- **LinkedIn:** [Adib Bagus Sudiyono](https://www.linkedin.com/in/adibbaguss/)
+- **GitHub:** [adibbaguss](https://github.com/adibbaguss)
+- **Web Profile:** [adibbaguss.github.io](https://adibbaguss.github.io)
