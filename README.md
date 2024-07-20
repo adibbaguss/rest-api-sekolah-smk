@@ -1,66 +1,192 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+```markdown
+# API Sekolah SMK
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+API ini menyediakan berbagai endpoint untuk mengelola data sekolah SMK, termasuk data siswa, guru, jurusan, mata pelajaran, jadwal pelajaran, mengajar, nilai, dan kelas. Selain operasi CRUD (Create, Read, Update, Delete) dasar, API ini juga menawarkan endpoint khusus untuk kebutuhan spesifik.
 
-## About Laravel
+## Struktur Endpoint
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Guru
+- **GET /api/guru**: Mengambil semua data guru.
+- **POST /api/guru**: Menambahkan data guru baru.
+- **GET /api/guru/{guru}**: Mengambil data guru berdasarkan ID.
+- **PUT/PATCH /api/guru/{guru}**: Memperbarui data guru berdasarkan ID.
+- **DELETE /api/guru/{guru}**: Menghapus data guru berdasarkan ID.
+- **GET /api/guru/{id}/jadwal**: Mengambil jadwal mengajar guru berdasarkan ID guru.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Jadwal Pelajaran
+- **GET /api/jadwal_pelajaran**: Mengambil semua data jadwal pelajaran.
+- **POST /api/jadwal_pelajaran**: Menambahkan data jadwal pelajaran baru.
+- **GET /api/jadwal_pelajaran/hari/{hari}**: Mengambil data jadwal pelajaran berdasarkan hari.
+- **GET /api/jadwal_pelajaran/{jadwal_pelajaran}**: Mengambil data jadwal pelajaran berdasarkan ID.
+- **PUT/PATCH /api/jadwal_pelajaran/{jadwal_pelajaran}**: Memperbarui data jadwal pelajaran berdasarkan ID.
+- **DELETE /api/jadwal_pelajaran/{jadwal_pelajaran}**: Menghapus data jadwal pelajaran berdasarkan ID.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Jurusan
+- **GET /api/jurusan**: Mengambil semua data jurusan.
+- **POST /api/jurusan**: Menambahkan data jurusan baru.
+- **GET /api/jurusan/{jurusan}**: Mengambil data jurusan berdasarkan ID.
+- **PUT/PATCH /api/jurusan/{jurusan}**: Memperbarui data jurusan berdasarkan ID.
+- **DELETE /api/jurusan/{jurusan}**: Menghapus data jurusan berdasarkan ID.
 
-## Learning Laravel
+### Kelas
+- **GET /api/kelas**: Mengambil semua data kelas.
+- **POST /api/kelas**: Menambahkan data kelas baru.
+- **GET /api/kelas/{id}/siswa**: Mengambil data siswa berdasarkan ID kelas.
+- **GET /api/kelas/{kelasid}/nilai/{mataPelajaranId}**: Mengambil nilai siswa dalam suatu kelas berdasarkan mata pelajaran tertentu.
+- **GET /api/kelas/{kela}**: Mengambil data kelas berdasarkan ID.
+- **PUT/PATCH /api/kelas/{kela}**: Memperbarui data kelas berdasarkan ID.
+- **DELETE /api/kelas/{kela}**: Menghapus data kelas berdasarkan ID.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Mata Pelajaran
+- **GET /api/mata_pelajaran**: Mengambil semua data mata pelajaran.
+- **POST /api/mata_pelajaran**: Menambahkan data mata pelajaran baru.
+- **GET /api/mata_pelajaran/{mata_pelajaran}**: Mengambil data mata pelajaran berdasarkan ID.
+- **PUT/PATCH /api/mata_pelajaran/{mata_pelajaran}**: Memperbarui data mata pelajaran berdasarkan ID.
+- **DELETE /api/mata_pelajaran/{mata_pelajaran}**: Menghapus data mata pelajaran berdasarkan ID.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Mengajar
+- **GET /api/mengajar**: Mengambil semua data mengajar.
+- **POST /api/mengajar**: Menambahkan data mengajar baru.
+- **GET /api/mengajar/{mengajar}**: Mengambil data mengajar berdasarkan ID.
+- **PUT/PATCH /api/mengajar/{mengajar}**: Memperbarui data mengajar berdasarkan ID.
+- **DELETE /api/mengajar/{mengajar}**: Menghapus data mengajar berdasarkan ID.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Nilai
+- **GET /api/nilai**: Mengambil semua data nilai.
+- **POST /api/nilai**: Menambahkan data nilai baru.
+- **GET /api/nilai/{nilai}**: Mengambil data nilai berdasarkan ID.
+- **PUT/PATCH /api/nilai/{nilai}**: Memperbarui data nilai berdasarkan ID.
+- **DELETE /api/nilai/{nilai}**: Menghapus data nilai berdasarkan ID.
+- **GET /api/nilai/siswa/{id}/nilai**: Mengambil data nilai siswa berdasarkan ID siswa.
 
-## Laravel Sponsors
+### Siswa
+- **GET /api/siswa**: Mengambil semua data siswa.
+- **POST /api/siswa**: Menambahkan data siswa baru.
+- **GET /api/siswa/{id}/jadwal_pelajaran**: Mengambil data jadwal pelajaran siswa berdasarkan ID siswa.
+- **GET /api/siswa/{id}/nilai**: Mengambil data nilai siswa berdasarkan ID siswa.
+- **GET /api/siswa/{siswa}**: Mengambil data siswa berdasarkan ID.
+- **PUT/PATCH /api/siswa/{siswa}**: Memperbarui data siswa berdasarkan ID.
+- **DELETE /api/siswa/{siswa}**: Menghapus data siswa berdasarkan ID.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## Contoh Penggunaan
 
-### Premium Partners
+### Mendapatkan Jadwal Mengajar Guru
+Endpoint ini mengembalikan data jadwal mengajar guru beserta mata pelajaran dan kelas yang diajar.
+```php
+public function getMengajarByGuru($id)
+{
+    $guru = Guru::with(['mengajar.mataPelajaran', 'mengajar.kelas', 'mengajar.jadwalPelajaran'])->find($id);
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+    if (!$guru) {
+        return response()->json(['message' => 'Guru not found'], 404);
+    }
 
-## Contributing
+    $jadwalGuru = $guru->mengajar->flatMap(function ($mengajarItem) {
+        return $mengajarItem->jadwalPelajaran->map(function ($jadwal) use ($mengajarItem) {
+            return [
+                'hari' => $jadwal->hari,
+                'jam_pelajaran' => $jadwal->jam_pelajaran,
+                'semester' => $jadwal->semester,
+                'pelajaran' => [
+                    'kode_mapel' => $mengajarItem->mataPelajaran->kode_mapel,
+                    'nama_mapel' => $mengajarItem->mataPelajaran->nama_mapel,
+                    'nama_kelas' => $mengajarItem->kelas->nama_kelas,
+                    'tahun_ajaran' => $mengajarItem->kelas->tahun_ajaran,
+                ],
+            ];
+        });
+    });
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+    $data = [
+        'id' => $guru->id,
+        'nip' => $guru->nip,
+        'nama_lengkap' => $guru->nama_lengkap,
+        'jadwal_guru' => $jadwalGuru,
+    ];
 
-## Code of Conduct
+    return new GuruResource(true, 'Data guru beserta mata pelajaran dan kelas yang diajar', $data);
+}
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Mendapatkan Nilai Siswa Berdasarkan Mata Pelajaran
+Endpoint ini mengembalikan data nilai siswa dalam suatu kelas berdasarkan mata pelajaran tertentu.
+- **GET /api/kelas/{kelasid}/nilai/{mataPelajaranId}**: Mengambil nilai siswa dalam suatu kelas berdasarkan mata pelajaran.
+```php
+public function getNilaiByKelasAndMataPelajaran($kelasid, $mataPelajaranId)
+{
+    $kelas = Kelas::find($kelasid);
+    if (!$kelas) {
+        return response()->json(['message' => 'Data Kelas not found'], 404);
+    }
 
-## Security Vulnerabilities
+    $nilai = Nilai::whereIn('id_siswa', $kelas->siswa->pluck('id'))
+        ->where('id_mapel', $mataPelajaranId)
+        ->get();
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+    if ($nilai->isEmpty()) {
+        return response()->json(['message' => 'Data Nilai not found'], 404);
+    }
 
-## License
+    $data = [
+        'kelas' => $kelas->nama_kelas,
+        'mata_pelajaran' => MataPelajaran::find($mataPelajaranId)->nama_mapel,
+        'nilai_siswa' => $nilai->map(function ($item) {
+            return [
+                'nama_siswa' => $item->siswa->nama_lengkap,
+                'nilai' => $item->nilai_angka,
+            ];
+        })
+    ];
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+    return new KelasResource(true, 'Data nilai siswa dalam suatu kelas berdasarkan mata pelajaran', $data);
+}
+```
+
+## Instalasi
+
+1. Clone repositori ini
+```sh
+git clone https://github.com/username/sekolah-smk-api.git
+```
+
+2. Install dependensi
+```sh
+composer install
+```
+
+3. Salin file `.env.example` ke `.env` dan sesuaikan konfigurasi database
+```sh
+cp .env.example .env
+```
+
+4. Generate key aplikasi
+```sh
+php artisan key:generate
+```
+
+5. Jalankan migrasi dan seeder (jika ada)
+```sh
+php artisan migrate --seed
+```
+
+6. Jalankan server lokal
+```sh
+php artisan serve
+```
+
+## Penggunaan
+
+Gunakan aplikasi API client seperti Postman untuk mengakses endpoint yang tersedia. Pastikan untuk menyertakan token autentikasi jika diperlukan.
+
+## Kontribusi
+
+Jika Anda ingin berkontribusi, silakan buat pull request dengan deskripsi perubahan yang jelas dan detail. Semua kontribusi dipers
+
+ilakan dan akan diperiksa secepat mungkin.
+
+## Lisensi
+
+Proyek ini dilisensikan di bawah lisensi MIT - lihat file [LICENSE](LICENSE) untuk detailnya.
+```
+
+Pastikan untuk menyesuaikan URL kloning repositori dan menambahkan informasi lain yang mungkin relevan untuk proyek Anda.
