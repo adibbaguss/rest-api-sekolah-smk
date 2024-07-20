@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Mengajar;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Guru extends Model
 {
@@ -25,8 +26,14 @@ class Guru extends Model
     protected $primaryKey = 'id';
 
     // relasi
-    public function mengajar(): hasMany
+    /**
+     * Get all of the mengajar for the Guru
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function mengajar(): HasMany
     {
-        return $this->hasMany(Mengajar::class, 'id');
+        return $this->hasMany(Mengajar::class, 'id_guru', 'id');
     }
+
 }

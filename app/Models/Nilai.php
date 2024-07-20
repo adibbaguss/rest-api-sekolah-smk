@@ -7,6 +7,7 @@ use App\Models\Mengajar;
 use App\Models\Siswa;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Nilai extends Model
 {
@@ -27,7 +28,7 @@ class Nilai extends Model
      */
     public function siswa(): BelongsTo
     {
-        return $this->belongsTo(Siswa::class, 'id_siswa');
+        return $this->belongsTo(Siswa::class, 'id_siswa', 'id');
     }
 
     /**
@@ -37,16 +38,16 @@ class Nilai extends Model
      */
     public function mataPelajaran(): BelongsTo
     {
-        return $this->belongsTo(MataPelajaran::class, 'id_mapel');
+        return $this->belongsTo(MataPelajaran::class, 'id_mapel', 'id');
     }
 
     /**
-     * Relasi ke model MataPelajaran
+     * Relasi ke model Mengajar
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function mengajar(): BelongsTo
     {
-        return $this->belongsTo(Mengajar::class, 'id_mapel');
+        return $this->belongsTo(Mengajar::class, 'id_mapel', 'id');
     }
 }

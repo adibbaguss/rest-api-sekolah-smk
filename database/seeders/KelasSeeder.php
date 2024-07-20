@@ -28,8 +28,8 @@ class KelasSeeder extends Seeder
                     DB::table('kelas')->insert([
                         'nama_kelas' => $tahun . ' ' . $singkatan . '-' . $i,
                         'tahun_ajaran' => $tahunAjaran,
-                        'created_at' => now(),
-                        'updated_at' => now(),
+                        // 'created_at' => now(),
+                        // 'updated_at' => now(),
                     ]);
                 }
             }

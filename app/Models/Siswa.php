@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use App\Models\Jurusan;
+use App\Models\Kelas;
 use App\Models\Nilai;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Siswa extends Model
 {
@@ -24,6 +27,7 @@ class Siswa extends Model
         'nomor_telepon',
         'email',
         'id_jurusan',
+        'id_kelas',
         'status_aktif',
         'tahun_masuk',
         'tahun_lulus',
@@ -31,15 +35,34 @@ class Siswa extends Model
 
     protected $primayKey = 'id';
 
-    // relasi
-    public function jurusan(): BelongTo
+    /**
+     * Get the jurusan that owns the Siswa
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function jurusan(): BelongsTo
     {
-        return $this->belongTo(Jurusan::class, 'id_jurusan');
+        return $this->belongsTo(Jurusan::class, 'id_jurusan', 'id');
     }
 
-    public function nilai(): hasMany
+    /**
+     * Get the kelas that owns the Siswa
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function kelas(): BelongsTo
     {
-        return $this->hasMany(Nilai::class, 'id');
+        return $this->belongsTo(Kelas::class, 'id_kelas', 'id');
+    }
+
+    /**
+     * Get the nilai that owns the Siswa
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function nilai(): HasMany
+    {
+        return $this->hasMany(Nilai::class, 'id_siswa', 'id');
     }
 
 }

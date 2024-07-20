@@ -131,4 +131,53 @@ class GuruController extends Controller
         return new GuruResource(true, 'Data Guru Berhasil Dihapus!', null);
 
     }
+
+    /**
+     * getMengajarByGuru
+     *
+     * @param mixed $id
+     * @return void
+     */
+    public function getMengajarByGuru($id)
+    {
+        // Menggunakan Eloquent dengan eager loading untuk mengambil data guru beserta relasi mengajar
+        $guru = Guru::with(['mengajar.mataPelajaran', 'mengajar.kelas', 'mengajar.jadwalPelajaran'])->find($id);
+
+        // Memeriksa apakah data guru ditemukan
+        if (!$guru) {
+            return response()->json(['message' => 'Guru not found'], 404);
+        }
+
+        // Menyusun data jadwal pelajaran untuk respon
+        $jadwalGuru = $guru->mengajar->flatMap(function ($mengajarItem) {
+            return $mengajarItem->jadwalPelajaran->map(function ($jadwal) use ($mengajarItem) {
+                return [
+                    'hari' => $jadwal->hari,
+                    'jam_pelajaran' => $jadwal->jam_pelajaran,
+                    'semester' => $jadwal->semester,
+                    'pelajaran' => [
+                        'kode_mapel' => $mengajarItem->mataPelajaran->kode_mapel,
+                        'nama_mapel' => $mengajarItem->mataPelajaran->nama_mapel,
+                        'nama_kelas' => $mengajarItem->kelas->nama_kelas,
+                        'tahun_ajaran' => $mengajarItem->kelas->tahun_ajaran,
+                    ],
+                ];
+            });
+        })
+            ->sortBy(function ($item) {
+                return $item['semester'];
+            })->values();
+
+        // Menyusun data guru beserta jadwal pelajaran
+        $data = [
+            'id' => $guru->id,
+            'nip' => $guru->nip,
+            'nama_lengkap' => $guru->nama_lengkap,
+            'jadwal_guru' => $jadwalGuru->values()->all(),
+        ];
+
+        // Mengembalikan response menggunakan GuruResource
+        return new GuruResource(true, 'Data guru beserta mata pelajaran dan kelas yang diajar', $data);
+    }
+
 }

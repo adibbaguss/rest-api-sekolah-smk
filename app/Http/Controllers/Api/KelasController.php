@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\KelasResource;
 use App\Models\Kelas;
+use App\Models\Siswa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -109,4 +110,75 @@ class KelasController extends Controller
         return new KelasResource(true, 'Data Kelas Berhasil Dihapus!', null);
 
     }
+
+/**
+ * get siswa by id kelas
+ *
+ * @param mixed $id
+ * @return void
+ */
+    public function getSiswaByKelas($id)
+    {
+
+        $kelas = Kelas::with('siswa')->find($id);
+
+        if (!$kelas) {
+            return response()->json(['message' => 'Data Siswa not found'], 404);
+        }
+
+        // Mengembalikan response menggunakan GuruResource
+        return new KelasResource(true, 'Data Kelas dan Siswa!', $kelas);
+    }
+
+    public function getNilaiByKelasAndMataPelajaran($kelasId, $mataPelajaranId)
+    {
+        // Mengambil data kelas beserta siswa dan nilai mereka untuk mata pelajaran tertentu
+        $kelas = Kelas::with(['siswa' => function ($query) use ($mataPelajaranId) {
+            $query->with(['nilai' => function ($query) use ($mataPelajaranId) {
+                $query->where('id_mapel', $mataPelajaranId);
+            }]);
+        }])->find($kelasId);
+
+        // Memeriksa apakah data kelas ditemukan
+        if (!$kelas) {
+            return response()->json(['message' => 'Data Kelas not found'], 404);
+        }
+
+        // Menyusun data nilai untuk respon
+        $data = [
+            'nama_kelas' => $kelas->nama_kelas,
+            'tahun_ajaran' => $kelas->tahun_ajaran,
+            'mata_pelajaran' => null,
+            'siswa' => [],
+        ];
+
+        // Looping through each siswa in the kelas
+        foreach ($kelas->siswa as $siswa) {
+            foreach ($siswa->nilai as $nilai) {
+                // Set mata pelajaran data if not already set
+                if ($data['mata_pelajaran'] === null) {
+                    $data['mata_pelajaran'] = [
+                        'kode_mapel' => $nilai->mataPelajaran->kode_mapel,
+                        'nama_mapel' => $nilai->mataPelajaran->nama_mapel,
+                    ];
+                }
+
+                // Add siswa data
+                $data['siswa'][] = [
+                    'id_siswa' => $siswa->id,
+                    'nisn' => $siswa->nisn,
+                    'nama_siswa' => $siswa->nama_lengkap,
+                    'nilai' => $nilai->nilai_angka,
+                ];
+            }
+        }
+
+        // Mengembalikan response menggunakan resource atau JSON
+        return response()->json([
+            'success' => true,
+            'message' => 'Data Nilai Siswa untuk Mata Pelajaran Tertentu!',
+            'data' => $data,
+        ]);
+    }
+
 }

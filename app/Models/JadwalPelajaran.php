@@ -7,6 +7,7 @@ use App\Models\MataPelajaran;
 use App\Models\Mengajar;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class JadwalPelajaran extends Model
 {
@@ -24,18 +25,18 @@ class JadwalPelajaran extends Model
         'semester',
     ];
 
-    public function kelas(): belongTo
+    public function kelas(): BelongsTo
     {
-        return $this->belongsTo(Kelas::class, 'id_kelas');
+        return $this->belongsTo(Kelas::class, 'id_kelas', 'id');
     }
 
-    public function mataPelajaran(): belongTo
+    public function mataPelajaran(): BelongsTo
     {
-        return $this->belongsTo(MataPelajaran::class, 'id_mapel');
+        return $this->belongsTo(MataPelajaran::class, 'id_mapel', 'id');
     }
 
-    public function mengajar(): belongTo
+    public function mengajar(): BelongsTo
     {
-        return $this->belongsTo(Mengajar::class, 'id_mengajar');
+        return $this->belongsTo(Mengajar::class, 'id_mengajar', 'id');
     }
 }

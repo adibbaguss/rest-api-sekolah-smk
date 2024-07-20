@@ -148,4 +148,84 @@ class SiswaController extends Controller
         return new SiswaResource(true, 'Data Siswa Berhasil Dihapus!', null);
 
     }
+
+    /**
+     * getJadwalBySiswa
+     *
+     * @param mixed $id
+     * @return void
+     */
+    public function getJadwalBySiswa($id)
+    {
+        // Mengambil data siswa beserta jadwal pelajaran melalui relasi kelas
+        $siswa = Siswa::with('kelas.jadwalPelajaran')->find($id);
+
+        // Memeriksa apakah data siswa ditemukan
+        if (!$siswa) {
+            return response()->json(['message' => 'Data Siswa not found'], 404);
+        }
+
+        $jadwalPelajaran = $siswa->kelas->jadwalPelajaran->map(function ($jadwal) {
+            return [
+                'hari' => $jadwal->hari,
+                'jam_pelajaran' => $jadwal->jam_pelajaran,
+                'semester' => $jadwal->semester,
+            ];
+        });
+
+        $data = [
+            'id' => $siswa->id,
+            'nisn' => $siswa->nisn,
+            'nama_siswa' => $siswa->nama_lengkap,
+            'jadwal_pelajaran' => $jadwalPelajaran,
+        ];
+
+        // Mengembalikan response menggunakan SiswaResource
+        return new SiswaResource(true, 'Data Jadwal Siswa!', $data);
+    }
+
+    /**
+     * getNilaiBySiswa
+     *
+     * @param mixed $id
+     * @return void
+     */
+    public function getNilaiBySiswa($id)
+    {
+        // Mengambil data siswa beserta relasi nilai, mataPelajaran, jadwalPelajaran, dan kelas
+        $siswa = Siswa::with(['nilai.mataPelajaran.jadwalPelajaran.kelas'])->find($id);
+
+        // Memeriksa apakah data siswa ditemukan
+        if (!$siswa) {
+            return response()->json(['message' => 'Data Siswa not found'], 404);
+        }
+
+        // Menyusun data nilai berdasarkan tahun ajaran dan semester
+        $nilaiGrouped = $siswa->nilai->groupBy(function ($nilai) {
+            return $nilai->mataPelajaran->jadwalPelajaran->first()->kelas->tahun_ajaran ?? 'unknown';
+        })->map(function ($groupedByYear) {
+            return $groupedByYear->groupBy(function ($nilai) {
+                return $nilai->mataPelajaran->jadwalPelajaran->first()->semester ?? 'unknown';
+            })->map(function ($groupedBySemester) {
+                return $groupedBySemester->map(function ($nilai) {
+                    return [
+                        'kode_mapel' => $nilai->mataPelajaran->kode_mapel,
+                        'nama_mapel' => $nilai->mataPelajaran->nama_mapel,
+                        'nilai' => $nilai->nilai_angka,
+                    ];
+                });
+            });
+        });
+
+        // Menyusun data untuk respon
+        $data = [
+            'id' => $siswa->id,
+            'nama' => $siswa->nama_lengkap,
+            'nilai' => $nilaiGrouped,
+        ];
+
+        // Mengembalikan response menggunakan SiswaResource
+        return new SiswaResource(true, 'Data Nilai Siswa!', $data);
+    }
+
 }

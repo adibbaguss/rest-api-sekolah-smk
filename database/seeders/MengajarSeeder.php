@@ -25,8 +25,8 @@ class MengajarSeeder extends Seeder
                 'id_kelas' => $faker->randomElement($kelasIds),
                 'id_mapel' => $faker->randomElement($mapelIds),
                 'semester' => $faker->numberBetween(1, 2),
-                'created_at' => now(),
-                'updated_at' => now(),
+                // 'created_at' => now(),
+                // 'updated_at' => now(),
             ]);
         }
     }

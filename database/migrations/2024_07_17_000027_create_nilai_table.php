@@ -16,11 +16,11 @@ class CreateNilaiTable extends Migration
             $table->unsignedBigInteger('id_siswa');
             $table->unsignedBigInteger('id_mapel');
             $table->float('nilai_angka', 5, 2);
-            $table->timestamps();
+            // $table->timestamps();
 
             // Foreign keys
-            $table->foreign('id_siswa')->references('id')->on('siswa');
-            $table->foreign('id_mapel')->references('id')->on('mata_pelajaran');
+            $table->foreign('id_siswa')->references('id')->on('siswa')->onDelete('restrict');
+            $table->foreign('id_mapel')->references('id')->on('mata_pelajaran')->onDelete('restrict');
         });
     }
 

@@ -19,15 +19,17 @@ class NilaiSeeder extends Seeder
         $siswaIds = DB::table('siswa')->pluck('id')->toArray();
         $mapelIds = DB::table('mata_pelajaran')->pluck('id')->toArray();
 
-        // Insert random nilai for 100 records
-        for ($i = 0; $i < 100; $i++) {
-            DB::table('nilai')->insert([
-                'id_siswa' => $faker->randomElement($siswaIds),
-                'id_mapel' => $faker->randomElement($mapelIds),
-                'nilai_angka' => $faker->randomFloat(2, 0, 100),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
+        foreach ($siswaIds as $siswaId) {
+            // Insert at least 10 nilai for each siswa
+            for ($i = 0; $i < 10; $i++) {
+                DB::table('nilai')->insert([
+                    'id_siswa' => $siswaId,
+                    'id_mapel' => $faker->randomElement($mapelIds),
+                    'nilai_angka' => $faker->randomFloat(2, 50, 100),
+                    // 'created_at' => now(),
+                    // 'updated_at' => now(),
+                ]);
+            }
         }
     }
 }

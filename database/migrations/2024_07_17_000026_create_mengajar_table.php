@@ -14,18 +14,18 @@ return new class extends Migration
         Schema::create('mengajar', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('kode_mengajar');
-            $table->unsignedBigInteger('id_guru'); // Use unsignedBigInteger for foreign keys
-            $table->unsignedBigInteger('id_kelas'); // Use unsignedBigInteger for foreign keys
-            $table->unsignedBigInteger('id_mapel'); // Use unsignedBigInteger for foreign keys
+            $table->unsignedBigInteger('id_guru');
+            $table->unsignedBigInteger('id_kelas');
+            $table->unsignedBigInteger('id_mapel');
             $table->integer('semester');
-            $table->timestamps();
+            // $table->timestamps();
 
             /**
              * relasi
              */
-            $table->foreign('id_guru')->references('id')->on('guru');
-            $table->foreign('id_mapel')->references('id')->on('mata_pelajaran');
-            $table->foreign('id_kelas')->references('id')->on('kelas');
+            $table->foreign('id_kelas')->references('id')->on('kelas')->onDelete('restrict');
+            $table->foreign('id_guru')->references('id')->on('guru')->onDelete('restrict');
+            $table->foreign('id_mapel')->references('id')->on('mata_pelajaran')->onDelete('restrict');
         });
     }
 

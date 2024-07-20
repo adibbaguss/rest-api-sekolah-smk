@@ -17,20 +17,30 @@ Route::get('/user', function (Request $request) {
 
 // siswa
 Route::apiResource('/siswa', SiswaController::class);
+//mengambil data siswa dan nilainya
+Route::get('/siswa/{id}/nilai', [SiswaController::class, 'getNilaiBySiswa']);
+// mengambil data jadwal pelajaran siswa
+Route::get('/siswa/{id}/jadwal_pelajaran', [SiswaController::class, 'getJadwalBySiswa']);
 
 // jurusan
 Route::apiResource('/jurusan', JurusanController::class);
 
 // guru
 Route::apiResource('/guru', GuruController::class);
+// mengambil data jadwal guru by id
+Route::get('/guru/{id}/jadwal', [GuruController::class, 'getMengajarByGuru']);
 
 // mata pelajaran
 Route::apiResource('/mata_pelajaran', MataPelajaranController::class);
 
 // kelas
 Route::apiResource('/kelas', KelasController::class);
+// mengambil data siswa per kelas
+Route::get('/kelas/{id}/siswa', [KelasController::class, 'getSiswaByKelas']);
 
-// kelas
+Route::get('/kelas/{kelasid}/nilai/{mataPelajaranId}', [KelasController::class, 'getNilaiByKelasAndMataPelajaran']);
+
+// mengajar
 Route::apiResource('/mengajar', MengajarController::class);
 
 // nilai
@@ -38,3 +48,5 @@ Route::apiResource('/nilai', NilaiController::class);
 
 // jadwal pelajaran
 Route::apiResource('/jadwal_pelajaran', JadwalPelajaranController::class);
+// mengambil jadwal pelajaran berdasarkan hari
+Route::get('/jadwal_pelajaran/hari/{hari}', [JadwalPelajaranController::class, 'getJadwalByHari']);

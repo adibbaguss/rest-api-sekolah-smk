@@ -23,8 +23,8 @@ class JurusanSeeder extends Seeder
             DB::table('jurusan')->insert([
                 'kode_jurusan' => $j['kode_jurusan'],
                 'nama_jurusan' => $j['nama_jurusan'],
-                'created_at' => now(),
-                'updated_at' => now(),
+                // 'created_at' => now(),
+                // 'updated_at' => now(),
             ]);
         }
     }

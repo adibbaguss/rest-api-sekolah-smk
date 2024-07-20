@@ -17,13 +17,15 @@ class CreateSiswaTable extends Migration
             $table->text('alamat');
             $table->string('nomor_telepon', 20);
             $table->string('email', 50);
-            $table->integer('id_jurusan')->unsigned();
+            $table->unsignedBigInteger('id_jurusan');
+            $table->unsignedBigInteger('id_kelas');
             $table->enum('status_aktif', ['aktif', 'lulus', 'keluar']);
             $table->year('tahun_masuk');
             $table->year('tahun_lulus')->nullable();
             $table->timestamps();
 
-            $table->foreign('id_jurusan')->references('id')->on('jurusan');
+            $table->foreign('id_jurusan')->references('id')->on('jurusan')->onDelete('restrict');
+            $table->foreign('id_kelas')->references('id')->on('kelas')->onDelete('restrict');
         });
     }
 

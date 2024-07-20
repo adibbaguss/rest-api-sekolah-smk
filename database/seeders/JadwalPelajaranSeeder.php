@@ -22,15 +22,22 @@ class JadwalPelajaranSeeder extends Seeder
 
         // Insert random jadwal pelajaran for 50 records
         for ($i = 0; $i < 50; $i++) {
+            // Generate a random time between 07:00 and 14:00
+            $startTimestamp = strtotime('07:00');
+            $endTimestamp = strtotime('14:00');
+            $randomTimestamp = mt_rand($startTimestamp, $endTimestamp);
+            $jamPelajaran = date('H:i', $randomTimestamp);
+
             DB::table('jadwal_pelajaran')->insert([
                 'id_kelas' => $faker->randomElement($kelasIds),
                 'id_mapel' => $faker->randomElement($mapelIds),
                 'id_mengajar' => $faker->randomElement($mengajarIds),
                 'hari' => $faker->randomElement(['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu']),
-                'jam_pelajaran' => $faker->time('H:i'),
+
+                'jam_pelajaran' => $jamPelajaran,
                 'semester' => $faker->randomElement([1, 2]),
-                'created_at' => now(),
-                'updated_at' => now(),
+                // 'created_at' => now(),
+                // 'updated_at' => now(),
             ]);
         }
     }

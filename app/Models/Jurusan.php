@@ -19,9 +19,15 @@ class Jurusan extends Model
 
     protected $primaryKey = 'id';
 
+    /**
+     * Get all of the comments for the Jurusan
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+
     public function siswa(): HasMany
     {
-        return $this->hasMany(Siswa::class, 'id');
+        return $this->hasMany(Siswa::class, 'id_jurusan', 'id');
     }
 
 }

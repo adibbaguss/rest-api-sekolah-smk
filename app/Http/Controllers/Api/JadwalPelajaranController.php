@@ -123,4 +123,24 @@ class JadwalPelajaranController extends Controller
 
         return new JadwalPelajaranResource(true, 'Data Jadwal Pelajaran Berhasil Dihapus!', null);
     }
+    /**
+     * getJadwalByHari
+     *
+     * @param [type] $hari
+     * @return void
+     */
+    public function getJadwalByHari($hari)
+    {
+        $jadwalPelajaran = JadwalPelajaran::with('mataPelajaran', 'kelas')
+            ->where('hari', $hari)
+            ->get();
+
+        if ($jadwalPelajaran->isEmpty()) {
+            return response()->json(['message' => 'Data Jadwal Pelajaran not found'], 404);
+        }
+
+        // Mengembalikan response menggunakan JadwalPelajaranResource
+        return new JadwalPelajaranResource(true, 'Data Jadwal Pelajaran by Hari!', $jadwalPelajaran);
+    }
+
 }

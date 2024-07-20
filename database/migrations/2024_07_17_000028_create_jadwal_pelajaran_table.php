@@ -19,11 +19,11 @@ return new class extends Migration
             $table->enum('hari', ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu']);
             $table->time('jam_pelajaran');
             $table->integer('semester');
-            $table->timestamps();
+            // $table->timestamps();
 
-            $table->foreign('id_kelas')->references('id')->on('kelas');
-            $table->foreign('id_mapel')->references('id')->on('mata_pelajaran');
-            $table->foreign('id_mengajar')->references('id')->on('mengajar');
+            $table->foreign('id_kelas')->references('id')->on('kelas')->onDelete('restrict');
+            $table->foreign('id_mapel')->references('id')->on('mata_pelajaran')->onDelete('restrict');
+            $table->foreign('id_mengajar')->references('id')->on('mengajar')->onDelete('restrict');
         });
     }
 

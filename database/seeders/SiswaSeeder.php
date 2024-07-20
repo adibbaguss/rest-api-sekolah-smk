@@ -15,8 +15,8 @@ class SiswaSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        $jurusanIds = DB::table('jurusan')->pluck('id')->take(24)->toArray();
-
+        $jurusanIds = DB::table('jurusan')->pluck('id')->take(4)->toArray();
+        $kelasIds = DB::table('kelas')->pluck('id')->take(24)->toArray();
         for ($i = 0; $i < 330; $i++) {
             DB::table('siswa')->insert([
                 'nisn' => $faker->unique()->numerify('##########'),
@@ -28,6 +28,7 @@ class SiswaSeeder extends Seeder
                 'nomor_telepon' => $faker->phoneNumber,
                 'email' => $faker->unique()->safeEmail,
                 'id_jurusan' => $faker->randomElement($jurusanIds),
+                'id_kelas' => $faker->randomElement($kelasIds),
                 'status_aktif' => 'aktif',
                 'tahun_masuk' => $faker->numberBetween(2018, 2021),
                 'tahun_lulus' => $faker->optional()->numberBetween(2022, 2024),
